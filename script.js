@@ -55,8 +55,24 @@ async function getMealById(id) {
     .then((data) => {
       return data.meals[0];
     });
-  console.log(meal);
   addMealToDOM(meal);
+}
+
+// Fetch Random meal
+async function randomMeal() {
+  // Clear meals and heading
+  mealsEl.innerHTML = '';
+  resultHeading.innerHTML = '';
+
+  const randomMeal = await fetch(
+    'https://themealdb.com/api/json/v1/1/random.php'
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      return data.meals[0];
+    });
+
+  addMealToDOM(randomMeal);
 }
 
 // Add meal to DOM
@@ -93,6 +109,8 @@ function addMealToDOM(meal) {
 
 // Event listeners
 submit.addEventListener('submit', searchMeal);
+
+random.addEventListener('click', randomMeal);
 
 mealsEl.addEventListener('click', (e) => {
   const mealInfo = e.path.find((i) => {
